@@ -27,7 +27,11 @@
         <version.log4j>1.2.17</version.log4j>
         <version.log4j2>2.4</version.log4j2>
         <version.junit>4.11</version.junit>
-        <version.teiid>8.12.0.Beta4-SNAPSHOT</version.teiid>
+        <version.teiid>8.13.0.Alpha1-SNAPSHOT</version.teiid>
+        <version.picketbox>4.9.3.Final</version.picketbox>
+        <version.ironjacamar>1.0.30.Final-redhat-1</version.ironjacamar>
+        <version.jboss-logging>3.3.0.Final</version.jboss-logging>
+        <version.com.h2database>1.3.152</version.com.h2database>
     </properties>
 
     <dependencyManagement>
@@ -49,6 +53,11 @@
             </dependency>
             <dependency>
                 <groupId>org.jboss.teiid</groupId>
+                <artifactId>teiid-engine</artifactId>
+                <version>${version.teiid}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.teiid</groupId>
                 <artifactId>teiid-admin</artifactId>
                 <version>${version.teiid}</version>
             </dependency>
@@ -59,9 +68,15 @@
             </dependency>
             <dependency>
                 <groupId>org.jboss.teiid</groupId>
-                <artifactId>teiid-api</artifactId>
+                <artifactId>teiid-jboss-security</artifactId>
                 <version>${version.teiid}</version>
             </dependency>
+            <dependency>
+	            <groupId>org.jboss.teiid.connectors</groupId>
+	            <artifactId>connector-ws</artifactId>
+	            <classifier>lib</classifier>
+	            <version>${version.teiid}</version>
+	        </dependency>
             <dependency>
                 <groupId>org.jboss.teiid</groupId>
                 <artifactId>teiid-common-core</artifactId>
@@ -77,41 +92,132 @@
                 <artifactId>log4j-api</artifactId>
                 <version>${version.log4j2}</version>
             </dependency>
+            <dependency>
+                <groupId>org.picketbox</groupId>
+                <artifactId>picketbox</artifactId>
+                <version>${version.picketbox}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.jboss.ironjacamar</groupId>
+                <artifactId>ironjacamar-jdbc</artifactId>
+                <version>${version.ironjacamar}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.ironjacamar</groupId>
+                <artifactId>ironjacamar-core-api</artifactId>
+                <version>${version.ironjacamar}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.ironjacamar</groupId>
+                <artifactId>ironjacamar-core-impl</artifactId>
+                <version>${version.ironjacamar}</version>
+            </dependency>
+            <dependency>
+				<groupId>org.jboss.logging</groupId>
+				<artifactId>jboss-logging</artifactId>
+				<version>${version.jboss-logging}</version>
+			</dependency>
+			<dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <version>${version.com.h2database}</version>
+               </dependency>
+			
         </dependencies>
     </dependencyManagement>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.jboss.teiid</groupId>
-      <artifactId>teiid-common-core</artifactId>
-      <scope>provided</scope>
-    </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.jboss.teiid</groupId>
+            <artifactId>teiid-common-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
     
-    <dependency>
-      <groupId>org.jboss.teiid</groupId>
-      <artifactId>teiid-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
+        <dependency>
+            <groupId>org.jboss.teiid</groupId>
+            <artifactId>teiid-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jboss.teiid</groupId>
+            <artifactId>teiid-engine</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jboss.teiid</groupId>
+            <artifactId>teiid-jboss-security</artifactId>
+        </dependency>
     
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <scope>provided</scope>
-    </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <scope>provided</scope>
+        </dependency>
     
-    <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-api</artifactId>
-        <scope>provided</scope>
-    </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    
+        <dependency>
+            <groupId>org.picketbox</groupId>
+            <artifactId>picketbox</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jboss.ironjacamar</groupId>
+            <artifactId>ironjacamar-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.ironjacamar</groupId>
+            <artifactId>ironjacamar-core-api</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.logging</groupId>
+                    <artifactId>jboss-logging-spi</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.ironjacamar</groupId>
+            <artifactId>ironjacamar-core-impl</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.logging</groupId>
+                    <artifactId>jboss-logging-spi</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
+        <dependency>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+		</dependency>
+		
+		<dependency>
+	        <groupId>org.jboss.teiid.connectors</groupId>
+	        <artifactId>connector-ws</artifactId>
+	        <classifier>lib</classifier>
+	        <scope>test</scope>
+	    </dependency>
+	    
+	    <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-    <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <scope>test</scope>
-    </dependency> 
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency> 
     
-  </dependencies>
+    </dependencies>
 
     <build>
         <plugins>
