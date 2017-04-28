@@ -1,0 +1,6 @@
+/home/ksoong/src/teiid-embedded/src/main/java/org/teiid/embedded/logging/Log4j1LoggerAdapter.java
+/home/ksoong/src/teiid-embedded/src/main/java/org/teiid/embedded/security/EmbeddedSecurityHelper.java
+/home/ksoong/src/teiid-embedded/src/main/java/org/teiid/embedded/util/JDBCUtils.java
+/home/ksoong/src/teiid-embedded/src/main/java/org/teiid/embedded/EmbeddedHelper.java
+/home/ksoong/src/teiid-embedded/src/main/java/org/teiid/embedded/resourceadapter/EmbeddedSecuritySubjectFactory.java
+/home/ksoong/src/teiid-embedded/src/main/java/org/teiid/embedded/logging/Log4j2LoggerAdapter.java
