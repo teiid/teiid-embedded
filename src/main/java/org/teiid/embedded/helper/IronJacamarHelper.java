@@ -27,18 +27,15 @@ import javax.resource.ResourceException;
 import javax.sql.DataSource;
 
 import org.teiid.embedded.helper.ironJacamar.Configuration;
+import org.teiid.embedded.helper.ironJacamar.IronJacamarHelperImpl;
 
-public interface EmbeddedHelper extends IronJacamarHelper {
+public interface IronJacamarHelper {
     
-    EmbeddedHelper Factory = new EmbeddedHelperImpl();
-
-    class EmbeddedHelperImpl implements EmbeddedHelper {
-
-        @Override
-        public DataSource newNoTxDataSource(Consumer<Configuration> consumer) throws ResourceException {
-            return IronJacamarHelper.Factory.create().newNoTxDataSource(consumer);
+    DataSource newNoTxDataSource(Consumer<Configuration> consumer) throws ResourceException;
+ 
+    public static class Factory {
+        public static IronJacamarHelper create() {
+            return new IronJacamarHelperImpl();
         }
-        
-        
     }
 }

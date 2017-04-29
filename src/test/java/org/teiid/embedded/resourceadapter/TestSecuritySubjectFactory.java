@@ -7,6 +7,7 @@ import javax.security.auth.Subject;
 
 import org.jboss.security.SubjectFactory;
 import org.junit.Test;
+import org.teiid.embedded.resourceadapter.EmbeddedSecuritySubjectFactory;
 import org.teiid.jboss.oauth.OAuth10CredentialImpl;
 
 public class TestSecuritySubjectFactory {

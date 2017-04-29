@@ -4,7 +4,7 @@ Teiid's interface implementation for Teiid Embedded.
 
 ## Build
 
-* install JDK 1.7 or higher
+* install JDK 1.8 or higher
 * install maven 3 - http://maven.apache.org/download.html
 * Create a github account and fork 
 

@@ -1,2 +1,3 @@
-/home/ksoong/src/teiid-embedded/src/test/java/org/teiid/embedded/TestEmbeddedHelper.java
+/home/ksoong/src/teiid-embedded/src/test/java/org/teiid/embedded/helper/utils/TestJDBCUtils.java
 /home/ksoong/src/teiid-embedded/src/test/java/org/teiid/embedded/resourceadapter/TestSecuritySubjectFactory.java
+/home/ksoong/src/teiid-embedded/src/test/java/org/teiid/embedded/helper/TestEmbeddedHelper.java

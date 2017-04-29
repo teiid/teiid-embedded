@@ -21,6 +21,7 @@
 
     <properties>
         <version.ironjacamar>1.4.4.Final</version.ironjacamar>
+        <version.commons-dbutils>1.6</version.commons-dbutils>
     
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.compiler.plugin>3.1</version.compiler.plugin>
@@ -38,13 +39,7 @@
 
 
     <dependencies>
-    
-      <dependency>
-            <groupId>org.picketbox</groupId>
-            <artifactId>picketbox</artifactId>
-            <version>${version.picketbox}</version>
-        </dependency>
-        
+ 
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
             <artifactId>ironjacamar-jdbc</artifactId>
@@ -73,7 +68,13 @@
                 </exclusion>
             </exclusions>
         </dependency>
-   
+        
+        <dependency>
+            <groupId>commons-dbutils</groupId>
+            <artifactId>commons-dbutils</artifactId>
+            <version>${version.commons-dbutils}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.jboss.teiid</groupId>
             <artifactId>teiid-common-core</artifactId>
@@ -99,6 +100,12 @@
             <groupId>org.jboss.teiid</groupId>
             <artifactId>teiid-jboss-security</artifactId>
             <version>${version.teiid}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.picketbox</groupId>
+            <artifactId>picketbox</artifactId>
+            <version>${version.picketbox}</version>
         </dependency>
     
         <dependency>
