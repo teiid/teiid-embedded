@@ -1,0 +1,71 @@
+== Teiid Embedded
+
+A helper library to make working with Teiid Embedded easier.
+
+[source,java]
+.*No Transaction DataSource Creation*
+----
+import org.teiid.embedded.helper.EmbeddedHelper;
+import javax.sql.DataSource;
+
+DataSource ds = EmbeddedHelper.Factory.newNoTxDataSource(c -> c.localManagedConnectionFactory(mcf -> {
+    mcf.setDriverClass("org.h2.Driver");
+    mcf.setConnectionURL("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
+    mcf.setUserName("sa");
+    mcf.setPassword("sa");
+}).poolConfiguration(p -> {
+    p.setMaxSize(30);
+    p.setMinSize(5);
+    p.setBlockingTimeout(30000);
+    p.setIdleTimeoutMinutes(10);
+}));
+----
+
+[source,java]
+.*TransactionManager Creation*
+----
+TransactionManager tm = EmbeddedHelper.Factory.transactionManager(c -> c.coreEnvironmentBean(core -> {
+    core.setSocketProcessIdPort(0);
+    core.setSocketProcessIdMaxPorts(10);
+}).coordinatorEnvironmentBean(coordinator -> {
+    coordinator.setEnableStatistics(false);
+    coordinator.setDefaultTimeout(300);
+    coordinator.setTransactionStatusManagerEnable(false);
+    coordinator.setTxReaperCancelFailWaitPeriod(120000);
+}).objectStoreEnvironmentBean(objectStore -> {
+    objectStore.setObjectStoreDir("target/narayana/data");
+}));
+----
+
+[source,java]
+.*JDBCUtils Usage*
+----
+import static org.teiid.embedded.helper.utils.JDBCUtils.*;
+
+Connection conn = getDriverConnection("org.h2.Driver", "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "sa", "sa");
+insert(conn, sql);
+update(conn, sql);
+ query(conn, sql);
+delete(conn, sql);
+----
+
+
+== Build
+
+* install JDK 1.8 or higher
+* install maven 3 - http://maven.apache.org/download.html
+* Create a github account and fork 
+
+Enter the following:
+
+----
+$ git clone https://github.com/<yourname>/teiid-embedded.git
+$ cd teiid-embedded
+$ mvn clean install -s settings.xml
+----
+
+== Link
+
+* http://teiid.org[Teiid Website]
+* https://teiid.gitbooks.io/documents/[Teiid Documentation]
+* https://issues.jboss.org/browse/TEIID[Teiid JIRA]
