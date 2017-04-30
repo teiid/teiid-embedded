@@ -21,11 +21,14 @@
  */
 package org.teiid.embedded.helper.ironJacamar;
 
+import java.io.File;
 import java.util.Objects;
 import java.util.function.Consumer;
 
 import javax.resource.ResourceException;
 import javax.sql.DataSource;
+import javax.transaction.TransactionManager;
+import javax.transaction.TransactionSynchronizationRegistry;
 
 import org.jboss.jca.adapters.jdbc.JDBCResourceAdapter;
 import org.jboss.jca.adapters.jdbc.local.LocalManagedConnectionFactory;
@@ -35,7 +38,13 @@ import org.jboss.jca.core.connectionmanager.pool.mcp.LeakDumperManagedConnection
 import org.jboss.jca.core.connectionmanager.pool.strategy.OnePool;
 import org.jboss.jca.core.connectionmanager.tx.TxConnectionManagerImpl;
 import org.jboss.jca.core.spi.transaction.TransactionIntegration;
+import org.jboss.jca.core.spi.transaction.usertx.UserTransactionRegistry;
+import org.jboss.jca.core.spi.transaction.xa.XATerminator;
+import org.jboss.jca.core.tx.noopts.TransactionIntegrationImpl;
+import org.jboss.jca.core.tx.noopts.UserTransactionRegistryImpl;
+import org.jboss.jca.core.tx.noopts.XATerminatorImpl;
 import org.teiid.embedded.helper.IronJacamarHelper;
+import org.teiid.embedded.helper.NarayanaHelper;
 
 public class IronJacamarHelperImpl implements IronJacamarHelper {
 
@@ -74,7 +83,21 @@ public class IronJacamarHelperImpl implements IronJacamarHelper {
         LocalManagedConnectionFactory mcf = config.localManagedConnectionFactory();
         mcf.setResourceAdapter(new JDBCResourceAdapter());
         
-        TransactionIntegration txIntegration = null;
+        TransactionManager tm = NarayanaHelper.Factory.transactionManager(c -> c.coreEnvironmentBean(core -> {
+            core.setSocketProcessIdPort(0);
+            core.setSocketProcessIdMaxPorts(2);
+        }).coordinatorEnvironmentBean(coordinator -> {
+            coordinator.setEnableStatistics(false);
+            coordinator.setDefaultTimeout(300);
+            coordinator.setTransactionStatusManagerEnable(false);
+            coordinator.setTxReaperCancelFailWaitPeriod(120000);
+        }).objectStoreEnvironmentBean(objectStore -> {
+            objectStore.setObjectStoreDir(System.getProperty("java.io.tmpdir")  + File.separator + "narayana");
+        }));
+        TransactionSynchronizationRegistry tsr = NarayanaHelper.Factory.transactionSynchronizationRegistry();
+        UserTransactionRegistry utr = new UserTransactionRegistryImpl();
+        XATerminator terminator = new XATerminatorImpl();
+        TransactionIntegration txIntegration = new TransactionIntegrationImpl(tm, tsr, utr, terminator, null);
         
         TxConnectionManagerImpl cm = new TxConnectionManagerImpl(txIntegration, true);
         String mcp = LeakDumperManagedConnectionPool.class.getName();
