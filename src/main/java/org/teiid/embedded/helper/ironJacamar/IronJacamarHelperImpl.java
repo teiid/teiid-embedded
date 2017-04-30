@@ -27,6 +27,7 @@ import java.util.function.Consumer;
 import javax.resource.ResourceException;
 import javax.sql.DataSource;
 
+import org.jboss.jca.adapters.jdbc.JDBCResourceAdapter;
 import org.jboss.jca.adapters.jdbc.local.LocalManagedConnectionFactory;
 import org.jboss.jca.core.api.connectionmanager.pool.PoolConfiguration;
 import org.jboss.jca.core.connectionmanager.notx.NoTxConnectionManagerImpl;
@@ -45,6 +46,7 @@ public class IronJacamarHelperImpl implements IronJacamarHelper {
         
         Objects.requireNonNull(config.localManagedConnectionFactory());
         LocalManagedConnectionFactory mcf = config.localManagedConnectionFactory();
+        mcf.setResourceAdapter(new JDBCResourceAdapter());
         
         NoTxConnectionManagerImpl cm = new NoTxConnectionManagerImpl();
         String mcp = LeakDumperManagedConnectionPool.class.getName();

@@ -1,9 +1,11 @@
 package org.teiid.embedded.helper;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.teiid.embedded.helper.utils.JDBCUtils.close;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.sql.DataSource;
 
@@ -22,7 +24,12 @@ public class TestEmbeddedHelper {
         }));
         Connection conn = ds.getConnection();
         assertNotNull(conn);
-        close(conn);
+        Statement stmt = conn.createStatement();
+        assertNotNull(stmt);
+        ResultSet rs = stmt.executeQuery("SELECT DATABASE ()");
+        assertTrue(rs.next());
+        assertEquals("TEST", rs.getString(1));
+        close(stmt, conn);
     }
     
     @Test
