@@ -1,9 +1,12 @@
-## Teiid Embedded
+== Teiid Embedded
+:toc: manual
+:toc-placement: preamble
 
 A helper library to make working with Teiid Embedded easier.
 
+=== No Transaction DataSource Creation
+
 [source,java]
-.*Creating a No Transaction DataSource*
 ----
 import org.teiid.embedded.helper.EmbeddedHelper;
 import javax.sql.DataSource;
@@ -21,8 +24,9 @@ DataSource ds = EmbeddedHelper.Factory.newNoTxDataSource(c -> c.localManagedConn
 }));
 ----
 
+=== JDBCUtils Usage
+
 [source,java]
-.*JDBCUtils Usage*
 ----
 import static org.teiid.embedded.helper.utils.JDBCUtils.*;
 
@@ -34,7 +38,7 @@ delete(conn, sql);
 ----
 
 
-## Build
+== Build
 
 * install JDK 1.8 or higher
 * install maven 3 - http://maven.apache.org/download.html
@@ -48,10 +52,8 @@ $ cd teiid-embedded
 $ mvn clean install -s settings.xml
 ----
 
-## Link
+== Link
 
-* [Teiid Website](http://teiid.org)
-* [Teiid Documentation](http://www.jboss.org/teiid/docs)
-* [Teiid Examples Documentation](https://docs.jboss.org/author/display/teiidexamples/Teiid+Examples)
-* [Teiid JIRA](https://issues.jboss.org/browse/TEIID)
-* [Teiid User Forum](https://community.jboss.org/en/teiid?view=discussions)
+* http://teiid.org[Teiid Website]
+* https://teiid.gitbooks.io/documents/[Teiid Documentation]
+* https://issues.jboss.org/browse/TEIID[Teiid JIRA]
