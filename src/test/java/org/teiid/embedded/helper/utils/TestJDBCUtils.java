@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import javax.resource.ResourceException;
 
 import org.h2.tools.RunScript;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -22,9 +23,14 @@ public class TestJDBCUtils {
         RunScript.execute(conn, new InputStreamReader(TestJDBCUtils.class.getClassLoader().getResourceAsStream("sql/customer-schema.sql")));
     }
     
+    @AfterClass
+    public static void destory() throws SQLException {
+        close(conn);
+    }
+    
     @Test
     public void testQuery() throws SQLException {
-        query(conn, "SELECT * FROM CUSTOMER");
+        query(conn, "SELECT * FROM CUSTOMER WHERE SSN = 'CST01036'");
     }
     
     @Test

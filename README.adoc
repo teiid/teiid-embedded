@@ -1,12 +1,9 @@
 == Teiid Embedded
-:toc: manual
-:toc-placement: preamble
 
 A helper library to make working with Teiid Embedded easier.
 
-=== No Transaction DataSource Creation
-
 [source,java]
+.*No Transaction DataSource Creation*
 ----
 import org.teiid.embedded.helper.EmbeddedHelper;
 import javax.sql.DataSource;
@@ -24,9 +21,8 @@ DataSource ds = EmbeddedHelper.Factory.newNoTxDataSource(c -> c.localManagedConn
 }));
 ----
 
-=== JDBCUtils Usage
-
 [source,java]
+.*JDBCUtils Usage*
 ----
 import static org.teiid.embedded.helper.utils.JDBCUtils.*;
 

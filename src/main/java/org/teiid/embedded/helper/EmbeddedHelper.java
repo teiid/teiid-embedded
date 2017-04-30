@@ -36,7 +36,12 @@ public interface EmbeddedHelper extends IronJacamarHelper {
 
         @Override
         public DataSource newNoTxDataSource(Consumer<Configuration> consumer) throws ResourceException {
-            return IronJacamarHelper.Factory.create().newNoTxDataSource(consumer);
+            return IronJacamarHelper.Factory.newNoTxDataSource(consumer);
+        }
+
+        @Override
+        public DataSource newDataSource(Consumer<Configuration> consumer) throws ResourceException {
+            return IronJacamarHelper.Factory.newDataSource(consumer);
         }
         
         

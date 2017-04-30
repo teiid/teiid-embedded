@@ -33,6 +33,8 @@ import org.jboss.jca.core.api.connectionmanager.pool.PoolConfiguration;
 import org.jboss.jca.core.connectionmanager.notx.NoTxConnectionManagerImpl;
 import org.jboss.jca.core.connectionmanager.pool.mcp.LeakDumperManagedConnectionPool;
 import org.jboss.jca.core.connectionmanager.pool.strategy.OnePool;
+import org.jboss.jca.core.connectionmanager.tx.TxConnectionManagerImpl;
+import org.jboss.jca.core.spi.transaction.TransactionIntegration;
 import org.teiid.embedded.helper.IronJacamarHelper;
 
 public class IronJacamarHelperImpl implements IronJacamarHelper {
@@ -49,6 +51,32 @@ public class IronJacamarHelperImpl implements IronJacamarHelper {
         mcf.setResourceAdapter(new JDBCResourceAdapter());
         
         NoTxConnectionManagerImpl cm = new NoTxConnectionManagerImpl();
+        String mcp = LeakDumperManagedConnectionPool.class.getName();
+        PoolConfiguration poolConfig = config.poolConfiguration();
+        if(poolConfig == null) {
+            poolConfig = new PoolConfiguration();
+        }
+        OnePool pool = new OnePool(mcf, poolConfig, false, true, mcp);
+        pool.setConnectionManager(cm);
+        cm.setPool(pool);
+        
+        return (DataSource) mcf.createConnectionFactory(cm);
+    }
+
+    @Override
+    public DataSource newDataSource(Consumer<Configuration> consumer) throws ResourceException {
+        
+        Objects.requireNonNull(consumer);
+        Configuration config = new Configuration();
+        consumer.accept(config);
+        
+        Objects.requireNonNull(config.localManagedConnectionFactory());
+        LocalManagedConnectionFactory mcf = config.localManagedConnectionFactory();
+        mcf.setResourceAdapter(new JDBCResourceAdapter());
+        
+        TransactionIntegration txIntegration = null;
+        
+        TxConnectionManagerImpl cm = new TxConnectionManagerImpl(txIntegration, true);
         String mcp = LeakDumperManagedConnectionPool.class.getName();
         PoolConfiguration poolConfig = config.poolConfiguration();
         if(poolConfig == null) {

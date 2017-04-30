@@ -52,7 +52,7 @@ public class TestEmbeddedHelper {
         close(conn);
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void testNoTxDataSource_2() throws Exception {
         
         DataSource ds = EmbeddedHelper.Factory.newNoTxDataSource(c -> c.localManagedConnectionFactory(mcf -> {
@@ -62,6 +62,7 @@ public class TestEmbeddedHelper {
             mcf.setPassword("sa");
         }));
         Connection conn = ds.getConnection();
+        conn.setAutoCommit(false);
         conn.commit();
     }
 

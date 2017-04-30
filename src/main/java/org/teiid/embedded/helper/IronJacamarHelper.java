@@ -31,11 +31,21 @@ import org.teiid.embedded.helper.ironJacamar.IronJacamarHelperImpl;
 
 public interface IronJacamarHelper {
     
+    /**
+     * Create a no transaction local DataSource
+     * @param consumer
+     * @return
+     * @throws ResourceException
+     */
     DataSource newNoTxDataSource(Consumer<Configuration> consumer) throws ResourceException;
+    
+    /**
+     * Create a transaction enable local DataSource
+     * @param consumer
+     * @return
+     * @throws ResourceException
+     */
+    DataSource newDataSource(Consumer<Configuration> consumer) throws ResourceException;
  
-    public static class Factory {
-        public static IronJacamarHelper create() {
-            return new IronJacamarHelperImpl();
-        }
-    }
+    IronJacamarHelper Factory = new IronJacamarHelperImpl();
 }
