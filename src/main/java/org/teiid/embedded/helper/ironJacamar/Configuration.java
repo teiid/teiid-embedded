@@ -40,9 +40,8 @@ public class Configuration {
 
     public Configuration poolConfiguration(Consumer<PoolConfiguration> consumer) {
         Objects.requireNonNull(consumer);
-        PoolConfiguration config = new PoolConfiguration();
-        consumer.accept(config);
-        this.poolConfiguration = config;
+        this.poolConfiguration = new PoolConfiguration();
+        consumer.accept(poolConfiguration);
         return this;
     }
 
@@ -52,9 +51,8 @@ public class Configuration {
     
     public Configuration localManagedConnectionFactory(Consumer<LocalManagedConnectionFactory> consumer) {
         Objects.requireNonNull(consumer);
-        LocalManagedConnectionFactory mcf = new LocalManagedConnectionFactory();
-        consumer.accept(mcf);
-        this.localManagedConnectionFactory = mcf;
+        this.localManagedConnectionFactory = new LocalManagedConnectionFactory();
+        consumer.accept(localManagedConnectionFactory);
         return this;
     }
     

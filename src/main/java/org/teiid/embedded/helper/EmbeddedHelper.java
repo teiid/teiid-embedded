@@ -25,23 +25,32 @@ import java.util.function.Consumer;
 
 import javax.resource.ResourceException;
 import javax.sql.DataSource;
+import javax.transaction.TransactionManager;
 
-import org.teiid.embedded.helper.ironJacamar.Configuration;
-
-public interface EmbeddedHelper extends IronJacamarHelper {
+public interface EmbeddedHelper extends IronJacamarHelper, NarayanaHelper {
     
     EmbeddedHelper Factory = new EmbeddedHelperImpl();
 
     class EmbeddedHelperImpl implements EmbeddedHelper {
 
         @Override
-        public DataSource newNoTxDataSource(Consumer<Configuration> consumer) throws ResourceException {
+        public DataSource newNoTxDataSource(Consumer<org.teiid.embedded.helper.ironJacamar.Configuration> consumer) throws ResourceException {
             return IronJacamarHelper.Factory.newNoTxDataSource(consumer);
         }
 
         @Override
-        public DataSource newDataSource(Consumer<Configuration> consumer) throws ResourceException {
+        public DataSource newDataSource(Consumer<org.teiid.embedded.helper.ironJacamar.Configuration> consumer) throws ResourceException {
             return IronJacamarHelper.Factory.newDataSource(consumer);
+        }
+        
+        @Override
+        public TransactionManager transactionManager() {
+            return NarayanaHelper.Factory.transactionManager();
+        }
+
+        @Override
+        public TransactionManager transactionManager(Consumer<org.teiid.embedded.helper.narayana.Configuration> consumer) {
+            return NarayanaHelper.Factory.transactionManager(consumer);
         }
         
         

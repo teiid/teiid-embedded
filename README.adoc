@@ -22,6 +22,22 @@ DataSource ds = EmbeddedHelper.Factory.newNoTxDataSource(c -> c.localManagedConn
 ----
 
 [source,java]
+.*TransactionManager Creation*
+----
+TransactionManager tm = EmbeddedHelper.Factory.transactionManager(c -> c.coreEnvironmentBean(core -> {
+    core.setSocketProcessIdPort(0);
+    core.setSocketProcessIdMaxPorts(10);
+}).coordinatorEnvironmentBean(coordinator -> {
+    coordinator.setEnableStatistics(false);
+    coordinator.setDefaultTimeout(300);
+    coordinator.setTransactionStatusManagerEnable(false);
+    coordinator.setTxReaperCancelFailWaitPeriod(120000);
+}).objectStoreEnvironmentBean(objectStore -> {
+    objectStore.setObjectStoreDir("target/narayana/data");
+}));
+----
+
+[source,java]
 .*JDBCUtils Usage*
 ----
 import static org.teiid.embedded.helper.utils.JDBCUtils.*;

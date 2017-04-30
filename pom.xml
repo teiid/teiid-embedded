@@ -20,54 +20,153 @@
   </licenses>
 
     <properties>
-        <version.ironjacamar>1.4.4.Final</version.ironjacamar>
-        <version.commons-dbutils>1.6</version.commons-dbutils>
-    
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <version.ironjacamar>1.4.4.Final</version.ironjacamar>
+        <version.narayana-jta>5.5.24.Final</version.narayana-jta>
+        <version.jboss-transaction-spi>7.6.0.Final</version.jboss-transaction-spi>
+        <version.commons-dbutils>1.6</version.commons-dbutils>
+        <version.jboss-connector-api_1.7_spec>1.0.0.Final</version.jboss-connector-api_1.7_spec>
+        
+        <version.junit>4.11</version.junit>
+        <version.com.h2database>1.4.195</version.com.h2database>
+    
+        
         <version.compiler.plugin>3.1</version.compiler.plugin>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <version.log4j>1.2.17</version.log4j>
-        <version.log4j2>2.4</version.log4j2>
-        <version.junit>4.11</version.junit>
-        <version.teiid>9.2.0.Final</version.teiid>
-        <version.picketbox>4.9.3.Final</version.picketbox>
-        
-        <version.jboss-logging>3.3.0.Final</version.jboss-logging>
-        <version.com.h2database>1.4.195</version.com.h2database>
+        <maven.compiler.source>1.8</maven.compiler.source>        
     </properties>
+    
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.spec.javax.resource</groupId>
+                <artifactId>jboss-connector-api_1.7_spec</artifactId>
+                <version>${version.jboss-connector-api_1.7_spec}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.ironjacamar</groupId>
+                <artifactId>ironjacamar-jdbc</artifactId>
+                <version>${version.ironjacamar}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.jboss.spec.javax.transaction</groupId>
+                        <artifactId>jboss-transaction-api_1.2_spec</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.ironjacamar</groupId>
+                <artifactId>ironjacamar-core-api</artifactId>
+                <version>${version.ironjacamar}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.jboss.ironjacamar</groupId>
+                        <artifactId>ironjacamar-spec-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.jboss</groupId>
+                        <artifactId>jboss-transaction-spi</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.jboss.spec.javax.transaction</groupId>
+                        <artifactId>jboss-transaction-api_1.2_spec</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.jboss.threads</groupId>
+                        <artifactId>jboss-threads</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.ironjacamar</groupId>
+                <artifactId>ironjacamar-common-api</artifactId>
+                <version>${version.ironjacamar}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.ironjacamar</groupId>
+                <artifactId>ironjacamar-common-spi</artifactId>
+                <version>${version.ironjacamar}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.ironjacamar</groupId>
+                <artifactId>ironjacamar-core-impl</artifactId>
+                <version>${version.ironjacamar}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.jboss.ironjacamar</groupId>
+                        <artifactId>ironjacamar-spec-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.jboss</groupId>
+                        <artifactId>jboss-transaction-spi</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+                
+            <dependency>
+                <groupId>org.jboss.narayana.jta</groupId>
+                <artifactId>narayana-jta</artifactId>
+                <version>${version.narayana-jta}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss</groupId>
+                <artifactId>jboss-transaction-spi</artifactId>
+                <version>${version.jboss-transaction-spi}</version>
+            </dependency>
+            
+        </dependencies>
+    </dependencyManagement>
 
 
     <dependencies>
  
         <dependency>
+            <groupId>org.jboss.spec.javax.resource</groupId>
+            <artifactId>jboss-connector-api_1.7_spec</artifactId>
+        </dependency> 
+        
+        <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
             <artifactId>ironjacamar-jdbc</artifactId>
-            <version>${version.ironjacamar}</version>
         </dependency>
-        <!--   -->
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
             <artifactId>ironjacamar-core-api</artifactId>
-            <version>${version.ironjacamar}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.jboss.logging</groupId>
-                    <artifactId>jboss-logging-spi</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
             <artifactId>ironjacamar-core-impl</artifactId>
-            <version>${version.ironjacamar}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.jboss.logging</groupId>
-                    <artifactId>jboss-logging-spi</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
+        
+        <dependency>
+            <groupId>org.jboss.narayana.jta</groupId>
+            <artifactId>narayana-jta</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss</groupId>
+            <artifactId>jboss-transaction-spi</artifactId>
+        </dependency>
+        
+        
+        <!-- 
+        <dependency>
+            <groupId>org.jboss.ironjacamar</groupId>
+            <artifactId>ironjacamar-common-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.ironjacamar</groupId>
+            <artifactId>ironjacamar-common-spi</artifactId>
+        </dependency>
+      
+        
+        
+        <dependency>
+            <groupId>org.jboss.ironjacamar</groupId>
+            <artifactId>ironjacamar-core-impl</artifactId>
+            <version>${version.ironjacamar}</version>
+        </dependency>
+         -->
         
         <dependency>
             <groupId>commons-dbutils</groupId>
@@ -75,59 +174,6 @@
             <version>${version.commons-dbutils}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.jboss.teiid</groupId>
-            <artifactId>teiid-common-core</artifactId>
-            <version>${version.teiid}</version>
-            <scope>provided</scope>
-        </dependency>
-    
-        <dependency>
-            <groupId>org.jboss.teiid</groupId>
-            <artifactId>teiid-api</artifactId>
-            <version>${version.teiid}</version>
-            <scope>provided</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.jboss.teiid</groupId>
-            <artifactId>teiid-engine</artifactId>
-            <version>${version.teiid}</version>
-            <scope>provided</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.jboss.teiid</groupId>
-            <artifactId>teiid-jboss-security</artifactId>
-            <version>${version.teiid}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.picketbox</groupId>
-            <artifactId>picketbox</artifactId>
-            <version>${version.picketbox}</version>
-        </dependency>
-    
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${version.log4j}</version>
-            <scope>provided</scope>
-        </dependency>
-    
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${version.log4j2}</version>
-            <scope>provided</scope>
-        </dependency>
-        
-        <dependency>
-			<groupId>org.jboss.logging</groupId>
-			<artifactId>jboss-logging</artifactId>
-			<version>${version.jboss-logging}</version>
-		</dependency>
-	    
 	    <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
