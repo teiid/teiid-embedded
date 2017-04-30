@@ -22,8 +22,31 @@ DataSource ds = EmbeddedHelper.Factory.newNoTxDataSource(c -> c.localManagedConn
 ----
 
 [source,java]
+.*Transaction Enable DataSource Creation*
+----
+import org.teiid.embedded.helper.EmbeddedHelper;
+import javax.sql.DataSource;
+
+DataSource ds = EmbeddedHelper.Factory.newDataSource(c -> c.localManagedConnectionFactory(mcf -> {
+    mcf.setDriverClass("org.h2.Driver");
+    mcf.setConnectionURL("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
+    mcf.setUserName("sa");
+    mcf.setPassword("sa");
+}).poolConfiguration(p -> {
+    p.setMaxSize(30);
+    p.setMinSize(5);
+    p.setBlockingTimeout(30000);
+    p.setIdleTimeoutMinutes(10);
+}));
+----
+
+
+[source,java]
 .*TransactionManager Creation*
 ----
+import org.teiid.embedded.helper.EmbeddedHelper;
+import javax.transaction.TransactionManager;
+
 TransactionManager tm = EmbeddedHelper.Factory.transactionManager(c -> c.coreEnvironmentBean(core -> {
     core.setSocketProcessIdPort(0);
     core.setSocketProcessIdMaxPorts(10);
@@ -47,6 +70,7 @@ insert(conn, sql);
 update(conn, sql);
  query(conn, sql);
 delete(conn, sql);
+ close(conn);
 ----
 
 

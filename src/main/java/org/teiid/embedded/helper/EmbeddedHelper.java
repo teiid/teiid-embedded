@@ -26,6 +26,7 @@ import java.util.function.Consumer;
 import javax.resource.ResourceException;
 import javax.sql.DataSource;
 import javax.transaction.TransactionManager;
+import javax.transaction.TransactionSynchronizationRegistry;
 
 public interface EmbeddedHelper extends IronJacamarHelper, NarayanaHelper {
     
@@ -51,6 +52,11 @@ public interface EmbeddedHelper extends IronJacamarHelper, NarayanaHelper {
         @Override
         public TransactionManager transactionManager(Consumer<org.teiid.embedded.helper.narayana.Configuration> consumer) {
             return NarayanaHelper.Factory.transactionManager(consumer);
+        }
+
+        @Override
+        public TransactionSynchronizationRegistry transactionSynchronizationRegistry() {
+            return NarayanaHelper.Factory.transactionSynchronizationRegistry();
         }
         
         

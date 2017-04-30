@@ -6,11 +6,13 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 import javax.transaction.TransactionManager;
+import javax.transaction.TransactionSynchronizationRegistry;
 
 import org.teiid.embedded.helper.NarayanaHelper;
 
 import com.arjuna.ats.arjuna.common.CoreEnvironmentBeanException;
 import com.arjuna.ats.arjuna.common.arjPropertyManager;
+import com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionSynchronizationRegistryImple;
 
 public class NarayanaHelperImpl implements NarayanaHelper {
     
@@ -30,7 +32,7 @@ public class NarayanaHelperImpl implements NarayanaHelper {
             coordinator.setTransactionStatusManagerEnable(false);
             coordinator.setTxReaperCancelFailWaitPeriod(120000);
         }).objectStoreEnvironmentBean(objectStore -> {
-            objectStore.setObjectStoreDir(System.getProperty("java.io.tmpdir")  + File.separator + ".narayana");
+            objectStore.setObjectStoreDir(System.getProperty("java.io.tmpdir")  + File.separator + "narayana");
         }));
     }
 
@@ -59,6 +61,11 @@ public class NarayanaHelperImpl implements NarayanaHelper {
         public IllegalBeanPropertiesException(Exception e) {
             super(e);
         }
+    }
+
+    @Override
+    public TransactionSynchronizationRegistry transactionSynchronizationRegistry() {
+        return new TransactionSynchronizationRegistryImple();
     }
 
     
