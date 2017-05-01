@@ -28,7 +28,9 @@ import javax.sql.DataSource;
 import javax.transaction.TransactionManager;
 import javax.transaction.TransactionSynchronizationRegistry;
 
-public interface EmbeddedHelper extends IronJacamarHelper, NarayanaHelper {
+import org.jboss.security.AuthenticationManager;
+
+public interface EmbeddedHelper extends IronJacamarHelper, NarayanaHelper, PicketboxHelper {
     
     EmbeddedHelper Factory = new EmbeddedHelperImpl();
 
@@ -57,6 +59,11 @@ public interface EmbeddedHelper extends IronJacamarHelper, NarayanaHelper {
         @Override
         public TransactionSynchronizationRegistry transactionSynchronizationRegistry() {
             return NarayanaHelper.Factory.transactionSynchronizationRegistry();
+        }
+
+        @Override
+        public AuthenticationManager authenticationManager(String securityDomainName, String configFile) {
+            return PicketboxHelper.Factory.authenticationManager(securityDomainName, configFile);
         }
         
         

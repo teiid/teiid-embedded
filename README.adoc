@@ -61,6 +61,16 @@ TransactionManager tm = EmbeddedHelper.Factory.transactionManager(c -> c.coreEnv
 ----
 
 [source,java]
+.*AuthenticationManager Creation*
+----
+import org.teiid.embedded.helper.EmbeddedHelper;
+import org.jboss.security.AuthenticationManager;
+
+AuthenticationManager authManager = EmbeddedHelper.Factory.authenticationManager("sample-file", "config/sample-file.xml");
+authManager.isValid(principal, credential, subject);
+----
+
+[source,java]
 .*JDBCUtils Usage*
 ----
 import static org.teiid.embedded.helper.utils.JDBCUtils.*;
@@ -85,7 +95,7 @@ Enter the following:
 ----
 $ git clone https://github.com/<yourname>/teiid-embedded.git
 $ cd teiid-embedded
-$ mvn clean install -s settings.xml
+$ mvn clean install 
 ----
 
 == Link

@@ -25,6 +25,7 @@
         <version.ironjacamar>1.4.4.Final</version.ironjacamar>
         <version.narayana-jta>5.5.24.Final</version.narayana-jta>
         <version.jboss-transaction-spi>7.6.0.Final</version.jboss-transaction-spi>
+        <version.picketbox>5.0.1.Final</version.picketbox>
         <version.commons-dbutils>1.6</version.commons-dbutils>
         <version.jboss-connector-api_1.7_spec>1.0.0.Final</version.jboss-connector-api_1.7_spec>
         
@@ -115,6 +116,12 @@
                 <version>${version.jboss-transaction-spi}</version>
             </dependency>
             
+            <dependency>
+                <groupId>org.picketbox</groupId>
+                <artifactId>picketbox</artifactId>
+                <version>${version.picketbox}</version>
+            </dependency>
+            
         </dependencies>
     </dependencyManagement>
 
@@ -148,26 +155,11 @@
             <artifactId>jboss-transaction-spi</artifactId>
         </dependency>
         
-        
-        <!-- 
         <dependency>
-            <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-common-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-common-spi</artifactId>
-        </dependency>
-      
-        
-        
-        <dependency>
-            <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-core-impl</artifactId>
-            <version>${version.ironjacamar}</version>
-        </dependency>
-         -->
-        
+          <groupId>org.picketbox</groupId>
+          <artifactId>picketbox</artifactId>
+        </dependency> 
+       
         <dependency>
             <groupId>commons-dbutils</groupId>
             <artifactId>commons-dbutils</artifactId>
